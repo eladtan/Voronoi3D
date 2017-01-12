@@ -17,6 +17,5 @@ using std::vector;
 \return The Hilbert order indices
 */
 vector<std::size_t> HilbertOrder3D(vector<Vector3D> const& cor);
-//void HilbertOrder3D();
 
 #endif // HILBERTORDER_HPP

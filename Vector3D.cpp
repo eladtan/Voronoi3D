@@ -53,6 +53,28 @@ x(ix), y(iy), z(iz) {}
 Vector3D::Vector3D(const Vector3D& v) :
 x(v.x), y(v.y), z(v.z) {}
 
+size_t Vector3D::getChunkSize(void) const
+{
+	return 3;
+}
+
+vector<double> Vector3D::serialize(void) const
+{
+	vector<double> res(3);
+	res[0] = x;
+	res[1] = y;
+	res[2] = z;
+	return res;
+}
+
+void Vector3D::unserialize(const vector<double>& data)
+{
+	assert(data.size() == 3);
+	x = data[0];
+	y = data[1];
+	z = data[2];
+}
+
 void Vector3D::Set(double ix, double iy, double iz)
 {
 	x = ix;

@@ -27,13 +27,15 @@ public:
 
 	~Delaunay3D();
 
-	void Build(vector<Vector3D> const& points);
+	void Build(vector<Vector3D> const& points,Vector3D const& maxv,Vector3D const& minv);
 
 	void BuildExtra(vector<Vector3D> const& points);
 
 	void output(string const& filename)const;
 
 	bool CheckCorrect(void);
+
+	void Clean(void);
 private:
 	void InsertPoint(std::size_t index);
 	std::size_t Walk(std::size_t point, std::size_t first_guess);

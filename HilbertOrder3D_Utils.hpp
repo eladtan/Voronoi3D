@@ -9,6 +9,7 @@
 #include "Vector3D.hpp"
 #include <vector>
 #include <algorithm>
+#include "utils.hpp"
 
 using std::vector;
 
@@ -31,22 +32,14 @@ void AdjustPoints(vector<Vector3D> const & vPointsIn, vector<Vector3D> & vPoints
 \param vPointsIn The input points
 \param vPointsOut (out) The output points
 */
-void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<vector<std::size_t>> & vOut);
+void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<vector<std::size_t> > & vOut);
 
 // Return indices order after sorting of the values vector:
 template <typename T>
-vector<std::size_t> ordered(vector<T> const& values) {
+vector<std::size_t> ordered(vector<T> const& values) 
+{
 	vector<std::size_t> indices(values.size());
-
-	for (std::size_t ii = 0; ii < indices.size(); ++ii)
-	{
-		indices[ii] = ii;
-	}
-
-	sort(
-		begin(indices), end(indices),
-		[&](std::size_t a, std::size_t b) { return values[a] < values[b]; }
-	);
+	sort_index(values,indices);
 	return indices;
 }
 

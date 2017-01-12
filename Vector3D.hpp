@@ -8,11 +8,12 @@
 
 #include <vector>
 #include <cmath>
+#include "serializable.hpp"
 
 using std::vector;
 
 //! \brief 3D Mathematical vector
-class Vector3D
+class Vector3D : public Serializable
 {
 public:
 
@@ -97,6 +98,12 @@ public:
 	/*! \brief Integer round of the vector's entries
 	*/
 	void Round();
+
+	size_t getChunkSize(void) const;
+	
+	vector<double> serialize(void) const;
+
+	void unserialize(const vector<double>& data);
 };
 
 /*! \brief Norm of a vector

@@ -370,32 +370,22 @@ Delaunay3D::~Delaunay3D()
 void Delaunay3D::BuildExtra(vector<Vector3D> const& points)
 {
 	vector<std::size_t> order = HilbertOrder3D(points);
-
+	size_t Nstart = points_.size();
 	points_.insert(points_.end(), points.begin(), points.end());
 
 	assert(to_check_.empty());
 	for (std::size_t i = 0; i < points.size(); ++i)
-		InsertPoint(order[i]+Norg_+4);
+		InsertPoint(order[i]+Nstart);
 }
 
-void Delaunay3D::Build(vector<Vector3D> const & points)
+void Delaunay3D::Build(vector<Vector3D> const & points, Vector3D const& maxv, Vector3D const& minv)
 {
-	Vector3D minv(points[0]), maxv(points[0]);
 	std::size_t Norg = points.size();
 	Norg_ = Norg;
-	for (std::size_t i = 1; i < Norg; ++i)
-	{
-		minv.x = std::min(minv.x, points[i].x);
-		minv.y = std::min(minv.y, points[i].y);
-		minv.z = std::min(minv.z, points[i].z);
-		maxv.x = std::max(maxv.x, points[i].x);
-		maxv.y = std::max(maxv.y, points[i].y);
-		maxv.z = std::max(maxv.z, points[i].z);
-	}
 	points_.reserve(static_cast<std::size_t>(pow(Norg,0.6666)*7));
 	points_ = points;
 	// Create large tetra points
-	double factor = 15;
+	double factor = 50;
 	points_.push_back(Vector3D(minv.x - 1.01*factor * (maxv.x - minv.x), minv.y - factor * (maxv.y - minv.y), minv.z - factor * (maxv.z - minv.z)));
 	points_.push_back(Vector3D(0.5*(minv.x + maxv.x), maxv.y + 1.02*factor *(maxv.y - minv.y), minv.z - factor * (maxv.z - minv.z)));
 	points_.push_back(Vector3D(maxv.x + 0.99*factor * (maxv.x - minv.x), minv.y - factor * (maxv.y - minv.y), minv.z - factor * (maxv.z - minv.z)));
@@ -782,4 +772,11 @@ bool Delaunay3D::CheckCorrect(void)
 		}			
 	}
 	return true;
+}
+
+void Delaunay3D::Clean(void)
+{
+	tetras_.clear();
+	points_.clear();
+	empty_tetras_.clear();
 }

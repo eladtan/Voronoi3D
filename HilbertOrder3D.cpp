@@ -60,7 +60,7 @@ private:
 	// Rotate a shape according to a given rotation scheme (in-place):
 	void RotateShape(int iShapeIndex, vector<int> vAxes);
 	// Rotate a shape according to rotation index, and return the rotated shape:
-	void HilbertCurve3D::RotateShape(HilbertCurve3D_shape const & roShape, HilbertCurve3D_shape & roShapeOut, int iRotationIndex);
+	void RotateShape(HilbertCurve3D_shape const & roShape, HilbertCurve3D_shape & roShapeOut, int iRotationIndex);
 	/*!
 	\brief Returns the rotation scheme, according to a rotation index
 	\param piRotation - a pointer to the output rotation scheme vector
@@ -125,7 +125,14 @@ int HilbertCurve3D::FindShapeIndex(HilbertCurve3D_shape & roShape)
 void HilbertCurve3D::BuildRecursionRule()
 {
 	// Reference recursion rule:
-	m_vShapeRecursion[0] = { 12, 16, 16, 2, 2, 14, 14, 10 };
+	m_vShapeRecursion[0][0] = 12;
+	m_vShapeRecursion[0][1] = 16;
+	m_vShapeRecursion[0][2] = 16;
+	m_vShapeRecursion[0][3] = 2;
+	m_vShapeRecursion[0][4] = 2;
+	m_vShapeRecursion[0][5] = 14;
+	m_vShapeRecursion[0][6] = 14;
+	m_vShapeRecursion[0][7] = 10;
 
 	HilbertCurve3D_shape oTempShape;
 	// What about ii=0? not necessary 
@@ -456,7 +463,7 @@ vector<std::size_t> HilbertOrder3D(vector<Vector3D> const& cor)
 	reorder( vOut, vIndSort );
 
 	// Find indices with repeated Hilbert distance:
-	vector<vector<std::size_t>> vEqualIndices;
+	vector<vector<std::size_t> > vEqualIndices;
 	FindEqualIndices(vOut, vEqualIndices);
 	
 	// If all points have different Hilbert distances, return the sorting indices:

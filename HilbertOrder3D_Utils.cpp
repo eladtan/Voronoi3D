@@ -87,7 +87,7 @@ void AdjustPoints(vector<Vector3D> const & vPointsIn, vector<Vector3D> & vPoints
 	return;
 }
 
-void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<vector<std::size_t>> & vOut)
+void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<vector<std::size_t> > & vOut)
 {
 	vector<unsigned long long int> vD_sorted_cpy = vD_sorted;
 	vector<unsigned long long int> vD_sorted_unq = vD_sorted;
