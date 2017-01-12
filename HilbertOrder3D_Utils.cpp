@@ -119,10 +119,10 @@ void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<v
 			itCur = find(itPrev, vD_sorted_cpy.end(), *it1);
 		}
 
-		iCurPrevDist = distance(itPrev, itCur);
+		iCurPrevDist = static_cast<int>(distance(itPrev, itCur));
 		if (1 < iCurPrevDist)
 		{
-			int iBase = distance(vD_sorted_cpy.begin(), itPrev);
+			int iBase = static_cast<int>(distance(vD_sorted_cpy.begin(), itPrev));
 			vector<std::size_t> vInd( iCurPrevDist );
 			// C++11
 			// iota(vInd.begin(), vInd.end(), iBase);
@@ -136,10 +136,10 @@ void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<v
 		itPrev = itCur;
 	}
 
-	iCurPrevDist = distance(itPrev, vD_sorted_cpy.end());
+	iCurPrevDist = static_cast<int>(distance(itPrev, vD_sorted_cpy.end()));
 	if (1 < iCurPrevDist )
 	{
-		int iBase = distance(vD_sorted_cpy.begin(), itPrev);
+		int iBase = static_cast<int>(distance(vD_sorted_cpy.begin(), itPrev));
 
 		vector<std::size_t> vInd(iCurPrevDist);
 		for (int ii = 0; ii < iCurPrevDist; ++ii)
@@ -148,8 +148,6 @@ void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<v
 		}
 		vOut.push_back(vInd);
 	}
-
-	int x = 0;
 
 	return;
 }

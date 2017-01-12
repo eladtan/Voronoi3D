@@ -375,7 +375,7 @@ void HilbertCurve3D::BuildShapeOrder()
 
 		for (std::size_t kk = 0; kk < vShapeVerticesX.size(); ++kk)
 		{
-			m_mShapeOrder[iShapeInd][vShapeVerticesX[kk]][vShapeVerticesY[kk]][vShapeVerticesZ[kk]] = kk;
+			m_mShapeOrder[iShapeInd][vShapeVerticesX[kk]][vShapeVerticesY[kk]][vShapeVerticesZ[kk]] = static_cast<int>(kk);
 		}
 	}
 
@@ -419,7 +419,6 @@ unsigned long long int HilbertCurve3D::Hilbert3D_xyz2d(Vector3D const & rvPoint,
 		iCurrentShape = m_vShapeRecursion[iCurrentShape][iOctantNum];
 	}
 
-	int a = 0;
 	return d;
 }
 
@@ -439,7 +438,7 @@ vector<std::size_t> HilbertOrder3D(vector<Vector3D> const& cor)
 	HilbertCurve3D oHilbert;
 
 	// Allocate an output vector:
-	int N = cor.size();
+	int N = static_cast<int>(cor.size());
 	vector<unsigned long long int> vOut;
 	vOut.reserve(N);
 	

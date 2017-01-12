@@ -10,6 +10,10 @@
 
 using std::vector;
 
+vector<vector<double> > MPI_exchange_data(const vector<int>& totalkwith, vector<vector<double> > &tosend);
+
+vector<vector<int> > MPI_exchange_data(const vector<int>& totalkwith, vector<vector<int> > &tosend);
+
 /*!
 \brief Sends and revs data
 \param tess The tessellation

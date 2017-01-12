@@ -120,7 +120,7 @@ Vector3D& Vector3D::operator-=(Vector3D const& v)
 // if their coordinates agree up to precision EPSILON
 bool Vector3D::operator==(Vector3D const& v)
 {
-	return (abs(x - v.x) < EPSILON) && (abs(y - v.y) < EPSILON) && (abs(z - v.z) < EPSILON);
+	return (std::abs(x - v.x) < EPSILON) && (std::abs(y - v.y) < EPSILON) && (std::abs(z - v.z) < EPSILON);
 }
 
 void Vector3D::RotateX(double a)

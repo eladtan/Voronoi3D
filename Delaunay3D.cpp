@@ -382,7 +382,7 @@ void Delaunay3D::Build(vector<Vector3D> const & points, Vector3D const& maxv, Ve
 {
 	std::size_t Norg = points.size();
 	Norg_ = Norg;
-	points_.reserve(static_cast<std::size_t>(pow(Norg,0.6666)*7));
+	points_.reserve(static_cast<std::size_t>(std::pow(Norg,0.6666)*7));
 	points_ = points;
 	// Create large tetra points
 	double factor = 50;
@@ -640,7 +640,7 @@ std::size_t Delaunay3D::Walk(std::size_t point, std::size_t first_guess)
 		{
 			for (std::size_t j = 0; j < 3; ++j)
 				b4_temp_[j] = points_[tetras_[cur_facet].points[(i + j + 1) % 4]];
-			int sign = 2 * (i % 2) - 1;
+			int sign = 2 * static_cast<int>(i % 2) - 1;
 			if ((orient3d(b4_temp_)*sign)>0)
 			{
 				good = false;
@@ -654,7 +654,6 @@ std::size_t Delaunay3D::Walk(std::size_t point, std::size_t first_guess)
 
 void Delaunay3D::flip14(std::size_t point, std::size_t tetra)
 {
-	std::size_t Ntetra = tetras_.size();
 	Tetrahedron toadd;
 	boost::array<std::size_t, 3> Nloc;
 	bool cleared_empty = false;
