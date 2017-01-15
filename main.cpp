@@ -3,9 +3,30 @@
 #include <boost/random/uniform_real_distribution.hpp>
 #include "Voronoi3D.hpp"
 #include <iostream>
+#include <string>
+#include <fstream>
+#include "int2str.hpp"
 
 namespace
 {
+	vector<Vector3D> ReadPoints(std::string const& filename)
+	{
+		std::ifstream fh(filename.c_str(), std::ifstream::binary);
+		int npoints;
+		fh.read(reinterpret_cast<char*>(&npoints), sizeof(int));
+		vector<Vector3D> res(static_cast<size_t>(npoints));
+		double temp;
+		for (size_t i = 0; i<static_cast<size_t>(npoints); ++i)
+		{
+			fh.read(reinterpret_cast<char*>(&temp), sizeof(double));
+			res[i].x = temp;
+			fh.read(reinterpret_cast<char*>(&temp), sizeof(double));
+			res[i].y = temp;
+			fh.read(reinterpret_cast<char*>(&temp), sizeof(double));
+			res[i].z = temp;
+		}
+		return res;
+	}
 
 	bool myfunction(Vector3D i, Vector3D j)
 	{
@@ -61,14 +82,23 @@ namespace
 int main(void)
 {
 	std::size_t np = 10;
-	Vector3D ll(-1, -1, -1), ur(1, 1, 1);
+	Vector3D ll(0, 0, 0), ur(1, 1, 1);
 	//vector<Vector3D> points = RandSquare(np, Vector3D(-1, -1, -1), Vector3D(1, 1, 1));
-	vector<Vector3D> points = cartesian_mesh(np,np,np, Vector3D(-1, -1, -1), Vector3D(1, 1, 1));
+	//vector<Vector3D> points = cartesian_mesh(np,np,np, Vector3D(-1, -1, -1), Vector3D(1, 1, 1));
+	
+	vector<Vector3D> points;
+	for (int i = 0; i < 31; ++i)
+	{
+		vector<Vector3D> temp = ReadPoints("c:/sim_data/tess" +int2str(i)+".bin");
+		points.insert(points.end(), temp.begin(), temp.end());
+	}
+	
+	
 	Delaunay3D tri;
 	//tri.Build(points);
 	//tri.CheckCorrect();
 	//	tri.output("c:/del3.bin");
-	Voronoi3D tess(Vector3D(-1, -1, -1), Vector3D(1, 1, 1));
+	Voronoi3D tess(Vector3D(0, 0, 0), Vector3D(1, 1, 1));
 	tess.Build(points);
 	tess.output("c:/v.bin");
 

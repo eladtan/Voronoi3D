@@ -540,13 +540,16 @@ void Delaunay3D::ExactFlip(std::size_t tetra0, std::size_t tetra1, std::size_t p
 			}
 			else
 			{
-				for (std::size_t i = 0; i < 3; ++i)
+				if (in_counter > 0)
 				{
-					std::size_t N3, N4;
-					if (out_check[i] == 1 && Are44(T0,T1,(p_loc+i+1)%4,tetras_,N3,N4))
+					for (std::size_t i = 0; i < 3; ++i)
 					{
-						flip44(tetra0, tetra1, p_loc, N3, N4);
-						return;
+						std::size_t N3, N4;
+						if (out_check[i] == 1 && Are44(T0, T1, (p_loc + i + 1) % 4, tetras_, N3, N4))
+						{
+							flip44(tetra0, tetra1, p_loc, N3, N4);
+							return;
+						}
 					}
 				}
 			}
@@ -579,6 +582,7 @@ void Delaunay3D::FindFlip(std::size_t tetra0,std::size_t tetra1,std::size_t p)
 	Vector3D intersection = PlaneLineIntersection(b3_temp_, points_[p], 
 		points_[tetras_[tetra1].points[other_point_loc]]);
 	std::pair<std::size_t, double> outside_intersection = InTriangle(b3_temp_, intersection);
+	
 	if (outside_intersection.second<1e-6)
 	{
 		ExactFlip(tetra0, tetra1, p);
