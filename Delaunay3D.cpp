@@ -458,6 +458,7 @@ void Delaunay3D::ExactFlip(std::size_t tetra0, std::size_t tetra1, std::size_t p
 	std::size_t out_counter = 0;
 	std::size_t other_point = 0;
 	std::size_t in_counter = 0;
+	std::size_t flat_counter = 0;
 	boost::array<std::size_t, 3> out_check;
 	Tetrahedron const& T0 = tetras_[tetra0];
 	Tetrahedron const& T1 = tetras_[tetra1];
@@ -483,6 +484,8 @@ void Delaunay3D::ExactFlip(std::size_t tetra0, std::size_t tetra1, std::size_t p
 		in_counter++;
 	b4_temp_[3] = points_[other_point];
 	double test1 = orient3d(b4_temp_);
+	if (std::abs(test1) == 0)
+		flat_counter++;
 	if (test0*test1 > 0)
 		out_check[0] = 0;
 	else
@@ -500,6 +503,8 @@ void Delaunay3D::ExactFlip(std::size_t tetra0, std::size_t tetra1, std::size_t p
 		in_counter++;
 	b4_temp_[3] = points_[other_point];
 	test1 = orient3d(b4_temp_);
+	if (std::abs(test1) == 0)
+		flat_counter++;
 	if (test0*test1 > 0)
 		out_check[1] = 0;
 	else
@@ -517,6 +522,8 @@ void Delaunay3D::ExactFlip(std::size_t tetra0, std::size_t tetra1, std::size_t p
 		in_counter++;
 	b4_temp_[3] = points_[other_point];
 	test1 = orient3d(b4_temp_);
+	if (std::abs(test1) == 0)
+		flat_counter++;
 	if (test0*test1 > 0)
 		out_check[2] = 0;
 	else
@@ -540,7 +547,7 @@ void Delaunay3D::ExactFlip(std::size_t tetra0, std::size_t tetra1, std::size_t p
 			}
 			else
 			{
-				if (in_counter > 0)
+				if (flat_counter > 0)
 				{
 					for (std::size_t i = 0; i < 3; ++i)
 					{
