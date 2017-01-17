@@ -1200,7 +1200,7 @@ bool Voronoi3D::BoundaryFace(std::size_t index) const
 	if (FaceNeighbors_[index].first >= Norg_ || FaceNeighbors_[index].second >= Norg_)
 	{
 #ifdef RICH_MPI
-		if (PointInDomain(ll_, ur_,std::max(FaceNeighbors_[index].first, FaceNeighbors_[index].second)))
+		if (PointInDomain(ll_, ur_,del_.points_[std::max(FaceNeighbors_[index].first, FaceNeighbors_[index].second)]))
 			return false;
 		else
 #endif
