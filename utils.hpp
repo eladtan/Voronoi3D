@@ -398,6 +398,16 @@ namespace
 	private:
 		const T arr;
 	};
+
+	template<class T> struct Wrapper
+	{
+		index_cmp<vector<T> > *cmp;
+		Wrapper(index_cmp<vector<T> > *cmp) : cmp(cmp) {}
+		bool operator()(T const & lhs, T const & rhs) const
+		{
+			return (*cmp)(lhs, rhs);
+		}
+	};
 }
 /*! \brief Returns the indeces of a sort
   \param arr The array to sort
@@ -408,7 +418,9 @@ template<class T> void sort_index(const vector<T> & arr, vector<int>& res)
 	res.resize(arr.size());
 	for (std::size_t i = 0; i < res.size(); ++i)
 		res[i] = static_cast<int>(i);
-	sort(res.begin(), res.end(), index_cmp<vector<T> >(arr));
+	index_cmp<vector<T> > cmp(arr);
+	Wrapper<T> w(&cmp);
+	sort(res.begin(), res.end(),w);
 }
 
 /*! \brief Returns the indeces of a sort
@@ -420,7 +432,9 @@ template<class T> void sort_index(const vector<T> & arr, vector<std::size_t>& re
 	res.resize(arr.size());
 	for (std::size_t i = 0; i < res.size(); ++i)
 		res[i] = i;
-	sort(res.begin(), res.end(), index_cmp<vector<T> >(arr));
+	index_cmp<vector<T> > cmp(arr);
+	Wrapper<T> w(&cmp);
+	sort(res.begin(), res.end(),w);
 }
 
 
@@ -433,7 +447,9 @@ template<class T> vector<std::size_t> sort_index(const vector<T> & arr)
 	vector<std::size_t> res(arr.size());
 	for (std::size_t i = 0; i < res.size(); ++i)
 		res[i] = i;
-	sort(res.begin(), res.end(), index_cmp<vector<T> >(arr));
+	index_cmp<vector<T> > cmp(arr);
+	Wrapper<T> w(&cmp);
+	sort(res.begin(), res.end(),w);
 	return res;
 }
 

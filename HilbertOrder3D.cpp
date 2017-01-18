@@ -438,9 +438,9 @@ vector<std::size_t> HilbertOrder3D(vector<Vector3D> const& cor)
 	HilbertCurve3D oHilbert;
 
 	// Allocate an output vector:
-	int N = static_cast<int>(cor.size());
+	size_t N = cor.size();
 	vector<unsigned long long int> vOut;
-	vOut.reserve(N);
+	vOut.resize(N);
 	
 	// Estimate the number of required iterations:
 	int numOfIterations = EstimateHilbertIterationNum(cor);
@@ -451,13 +451,14 @@ vector<std::size_t> HilbertOrder3D(vector<Vector3D> const& cor)
 	AdjustPoints(cor, vAdjustedPoints);
 
 	// Run throught the points, and calculate the Hilbert distance of each:
-	for (int ii = 0; ii < N; ++ii)
+	for (size_t ii = 0; ii < N; ++ii)
 	{
-		vOut.push_back(oHilbert.Hilbert3D_xyz2d(vAdjustedPoints[ii], numOfIterations+6));
+		vOut[ii]=oHilbert.Hilbert3D_xyz2d(vAdjustedPoints[ii], numOfIterations+6);
 		//vOut.push_back(oHilbert.Hilbert3D_xyz2d(vAdjustedPoints[ii], 2));
 	}
 	// Get the sorting indices:
-	vector<std::size_t> vIndSort = ordered(vOut);
+	vector<std::size_t> vIndSort;
+	ordered(vOut, vIndSort);
 	// Reorder the Hilbert distances vector (according to the sorting indices):
 	reorder( vOut, vIndSort );
 

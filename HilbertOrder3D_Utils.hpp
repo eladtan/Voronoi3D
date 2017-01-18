@@ -36,11 +36,10 @@ void FindEqualIndices(vector<unsigned long long int> const & vD_sorted, vector<v
 
 // Return indices order after sorting of the values vector:
 template <typename T>
-vector<std::size_t> ordered(vector<T> const& values) 
+void ordered(vector<T> const& values, vector<std::size_t> &indices)
 {
-	vector<std::size_t> indices(values.size());
+	indices.resize(values.size());
 	sort_index(values,indices);
-	return indices;
 }
 
 // Reorder a vector according to an index vector (obtained from the 'ordered' function)
